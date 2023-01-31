@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Teste1_EzequielGuazaiJunior</string>
+    <string name="autor">Autor</string>
+    <string name="titulo">Titulo</string>
+    <string name="ano">Ano</string>
+    <string name="editora">Editora</string>
+    <string name="grvar">Grvar</string>
+    <string name="listar">Listar</string>
+</resources>
