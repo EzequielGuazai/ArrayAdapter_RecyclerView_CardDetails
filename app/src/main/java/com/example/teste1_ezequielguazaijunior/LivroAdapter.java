@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,7 +17,14 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 
 public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.ViewHolder> {
+    private OnItemClickListner listner;
 
+    public  interface OnItemClickListner{
+        void onItemClick(int position);
+    }
+    public void setOnItemClickListener(OnItemClickListner clickListener){
+        listner = clickListener;
+    }
     private ArrayList<LivroModel> listar;
     public LivroAdapter(ArrayList<LivroModel> listar) {
         this.listar = listar;
@@ -26,7 +34,7 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.ViewHolder> 
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.row_item, parent, false);
-        return new ViewHolder(view);
+        return new ViewHolder(view, listner);
     }
 
     @Override
@@ -41,16 +49,26 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.ViewHolder> 
     }
     public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView autorTv, tituloTv;
+        public ImageButton deleteIb;
         public TextView autor_detalhes_tv, titulo_detalhes_tv, ano_detalhes_tv, editora_detalhes_tv;
-        public ViewHolder(@NonNull View itemView) {
+        public ViewHolder(@NonNull View itemView, OnItemClickListner listner) {
             super(itemView);
             autorTv = itemView.findViewById(R.id.autorTv);
             tituloTv = itemView.findViewById(R.id.tituloTv);
+
+            deleteIb = itemView.findViewById(R.id.deleteIb);
 
             autor_detalhes_tv = itemView.findViewById(R.id.autor_detalhes_tv);
             titulo_detalhes_tv = itemView.findViewById(R.id.titulo_detalhes_Tv);
             ano_detalhes_tv = itemView.findViewById(R.id.ano_detalhes_tv);
             editora_detalhes_tv = itemView.findViewById(R.id.editora_detalhes_tv);
+
+            deleteIb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    listner.onItemClick(getAdapterPosition());
+                }
+            });
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

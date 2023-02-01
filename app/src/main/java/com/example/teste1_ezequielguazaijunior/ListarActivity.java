@@ -33,6 +33,14 @@ public class ListarActivity extends AppCompatActivity {
         //e colocamos o adapter no recycler view
         recyclerView.setAdapter(adapter);
 
+        adapter.setOnItemClickListener(new LivroAdapter.OnItemClickListner() {
+            @Override
+            public void onItemClick(int position) {
+                DataAccessObject.livroModels.remove(position);
+                adapter.notifyItemRemoved(position);
+            }
+        });
+
         //colocamos acao no nosso botao para voltarmos ao main
         binding.adicionarBtn.setOnClickListener(new View.OnClickListener() {
             @Override
